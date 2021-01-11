@@ -1,22 +1,34 @@
 const path = require('path');
 const http = require('http');
 const express = require('express');
+const app = express();
 const socketio = require('socket.io');
+const router = express.Router();
+const exphbs = require('express-handlebars');
+const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 const formatMessage = require('./utils/messages');
+const main = require('./routes/main');
 const {
   userJoin,
   getCurrentUser,
   userLeave,
   getRoomUsers
 } = require('./utils/users');
+app.engine('handlebars',exphbs({defaultLayout: 'home'}));
+app.set('view engine','handlebars');
 
-const app = express();
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.json());
+
+
 const server = http.createServer(app);
 const io = socketio(server);
 
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(methodOverride('_method'));
+app.use('/',main);
 const botName = 'ChatCord Bot';
 
 // Run when client connects
@@ -73,3 +85,4 @@ io.on('connection', socket => {
 const PORT = process.env.PORT || 3000;
 
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+module.exports = router;

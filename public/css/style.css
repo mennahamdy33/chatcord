@@ -167,6 +167,12 @@ a {
 	width: 100%;
 }
 
+.join-main input[type='password'] {
+	font-size: 16px;
+	padding: 5px;
+	height: 40px;
+	width: 100%;
+}
 .join-main select {
 	font-size: 16px;
 	padding: 5px;
