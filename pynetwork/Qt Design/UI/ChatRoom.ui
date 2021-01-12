@@ -429,7 +429,7 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
+   <item row="1" column="0">
     <widget class="QFrame" name="frame">
      <property name="minimumSize">
       <size>
@@ -463,26 +463,6 @@
       </property>
       <property name="text">
        <string/>
-      </property>
-     </widget>
-     <widget class="QListView" name="Chat">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>90</y>
-        <width>461</width>
-        <height>471</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="Message">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>570</y>
-        <width>311</width>
-        <height>61</height>
-       </rect>
       </property>
      </widget>
      <widget class="QPushButton" name="SendButton">
@@ -525,6 +505,26 @@
       </property>
       <property name="text">
        <string>Chat Room</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="message">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>570</y>
+        <width>301</width>
+        <height>51</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="Chat">
+      <property name="geometry">
+       <rect>
+        <x>75</x>
+        <y>91</y>
+        <width>421</width>
+        <height>451</height>
+       </rect>
       </property>
      </widget>
     </widget>
