@@ -457,20 +457,20 @@
        <rect>
         <x>150</x>
         <y>100</y>
-        <width>463</width>
-        <height>42</height>
+        <width>480</width>
+        <height>45</height>
        </rect>
       </property>
       <property name="minimumSize">
        <size>
-        <width>463</width>
-        <height>42</height>
+        <width>480</width>
+        <height>45</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>463</width>
-        <height>42</height>
+        <width>480</width>
+        <height>45</height>
        </size>
       </property>
       <property name="font">

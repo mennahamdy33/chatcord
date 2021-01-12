@@ -11,10 +11,10 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Form(object):
-    def setupUi(self, Form):
-        Form.setObjectName("Form")
-        Form.resize(953, 893)
+class Ui_ChatForm(object):
+    def setupUi(self, ChatForm):
+        ChatForm.setObjectName("ChatForm")
+        ChatForm.resize(953, 893)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -151,10 +151,10 @@ class Ui_Form(object):
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ToolTipText, brush)
-        Form.setPalette(palette)
-        self.gridLayout = QtWidgets.QGridLayout(Form)
+        ChatForm.setPalette(palette)
+        self.gridLayout = QtWidgets.QGridLayout(ChatForm)
         self.gridLayout.setObjectName("gridLayout")
-        self.frame = QtWidgets.QFrame(Form)
+        self.frame = QtWidgets.QFrame(ChatForm)
         self.frame.setMinimumSize(QtCore.QSize(591, 661))
         self.frame.setMaximumSize(QtCore.QSize(591, 661))
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -191,11 +191,11 @@ class Ui_Form(object):
         self.label.setObjectName("label")
         self.gridLayout.addWidget(self.frame, 0, 0, 1, 1)
 
-        self.retranslateUi(Form)
-        QtCore.QMetaObject.connectSlotsByName(Form)
+        self.retranslateUi(ChatForm)
+        QtCore.QMetaObject.connectSlotsByName(ChatForm)
 
-    def retranslateUi(self, Form):
+    def retranslateUi(self, ChatForm):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
-        self.SendButton.setText(_translate("Form", "Send"))
-        self.label.setText(_translate("Form", "Chat Room"))
+        ChatForm.setWindowTitle(_translate("ChatForm", "Form"))
+        self.SendButton.setText(_translate("ChatForm", "Send"))
+        self.label.setText(_translate("ChatForm", "Chat Room"))
