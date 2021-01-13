@@ -3,7 +3,6 @@ from PyQt5.QtWidgets import QDialog, QApplication
 from PyQt5.uic import loadUi
 import Questions  as ui
 import math
-import pyqtgraph as pg
 import sys,os
 import numpy as np
 import pandas as pd
@@ -15,7 +14,7 @@ from sklearn.preprocessing import OneHotEncoder
 class ApplicationWindow(QDialog):
     def __init__(self):
         super(ApplicationWindow, self).__init__()
-        self.ui = ui.Ui_Form()
+        self.ui = ui.Ui_QuestionForm()
         self.ui.setupUi(self)
         self.ui.Result.clicked.connect(self.dataFromUser)        
         self.ord_enc = OrdinalEncoder()
@@ -69,14 +68,14 @@ class ApplicationWindow(QDialog):
 
         output = self.classifier.predict(inputData)
 
-        if (output == 1): 
+        if (output == 0): 
             self.ui.ResultText.setText('You Have To see your Doctor ASAP')
         else:
             self.ui.ResultText.setText('Nothing To worry about')
 
 
     def model(self):
-            originalData = pd.read_excel(r"C:\Users\EG\Downloads\kidney.xlsx")
+            originalData = pd.read_excel(r"D:\SBME 4\Network\Task\network\Model\kidney.xlsx",engine='openpyxl')
             Data = originalData.copy()
             numericalData = Data.iloc[:,:self.indexOfStartCatgoricalData]
             categoricalData= Data.iloc[:,self.indexOfStartCatgoricalData:]
