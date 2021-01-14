@@ -51,6 +51,7 @@ class loginWindow(QDialog):
         self.ui.setupUi(self)
         self.ui.lineEdit_2.setEchoMode(QtWidgets.QLineEdit.Password)
         self.ui.NextButton.clicked.connect(self.doctorInfo)
+        
     def doctorInfo(self):
         userName = self.ui.lineEdit.text()
         password = self.ui.lineEdit_2.text()
