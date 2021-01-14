@@ -9,10 +9,11 @@ from LoginForm import Ui_Form
 from ChatRoom import Ui_ChatForm
 from First import Ui_FirstForm
 from Questions import Ui_QuestionForm
-
+import pickle
+import time
 IP = "127.0.0.1"
 PORT = 1234
-
+HEADERSIZE= 10
 class FirstForm(QDialog):
     def __init__(self):
         super(FirstForm, self).__init__()
@@ -28,22 +29,63 @@ class FirstForm(QDialog):
         Questions = questionsWindow()
         widget.addWidget(Questions)
         widget.setCurrentIndex(widget.currentIndex() + 1)
+
 class questionsWindow(QDialog):
     def __init__(self):
         super(questionsWindow, self).__init__()
         self.ui = Ui_QuestionForm()
         self.ui.setupUi(self)
+        self.ui.Result.clicked.connect(self.model)
         self.ui.TalkToDoctor.clicked.connect(self.patientInfo)
         self.ui.Done.clicked.connect(app.quit)
+
+    def model(self):
+        data = {'age': self.ui.AgeText.text()
+                ,'bu': self.ui.BloodUreaText.text()
+                ,'bgr': self.ui.GlucoseText.text()
+                ,'sc': self.ui.SerumText.text()
+                ,'bp': self.ui.BloodPressureText.text()
+                ,'hemo': self.ui.HemoglobinText.text()
+                ,'htn':self.IsCheckBoxChecked(self.ui.Hypertension)
+                ,'dm':self.IsCheckBoxChecked(self.ui.Diabetes)
+                ,'cad':self.IsCheckBoxChecked(self.ui.Coronary)
+                ,'appet':self.ui.comboBox_3.currentIndex()-1
+                ,'ane':self.IsCheckBoxChecked(self.ui.Anemia)
+                ,'al':self.ui.AlbuminComboBox.currentIndex()-1
+                ,'su':self.ui.SugarComboBox.currentIndex()-1
+                ,'ba':self.IsCheckBoxChecked(self.ui.Bacteria)
+                }
+        self.clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.clientsocket.connect((IP, PORT))
+        msg = pickle.dumps(data)      
+        msg = bytes(f"{len(msg):<{HEADERSIZE}}", 'utf-8')+msg
+        self.clientsocket.send(msg)
+        time.sleep(5)
+        self.result()
+
+    def result(self):
+        # username_header = self.clientsocket.recv(HEADERSIZE)
+        # # If we received no data, server gracefully closed a connection, for example using socket.close() or socket.shutdown(socket.SHUT_RDWR)
+        # if not len(username_header):
+        #     print('Connection closed by the server')
+        #     sys.exit()
+       
+        message_header = self.clientsocket.recv(HEADERSIZE)
+        message_length = int(message_header.decode('utf-8').strip())
+        message = self.clientsocket.recv(message_length).decode('utf-8')
+        print(message)
+        self.ui.ResultText.setText(message)
+
+    def IsCheckBoxChecked(self,checkBox):
+        if (checkBox.isChecked()):
+            return(1)
+        else:
+            return(0)
+    
     def patientInfo(self):
         name = self.ui.NameText.text()
-        # age = self.ui.AgeText.text()
-        # glucose = self.ui.GlucoseText.text()
-        # hemoglobin = self.ui.HemoglobinText.text()
-        # serum = self.ui.SerumText.text()
-        # bloodUrea = self.ui.BloodUreaText.text()
-        # bloodPressure = self.ui.BloodPressureText.text()
         chat(name)
+
 class loginWindow(QDialog):
     def __init__(self):
         super(loginWindow, self).__init__()
@@ -76,6 +118,7 @@ class chatwindow(QDialog):
         self.myusername = self.username.encode('utf-8')
         self.username_header = f"{len(self.myusername):<{self.HEADER_LENGTH}}".encode('utf-8')
         self.client_socket.send(self.username_header + self.myusername)
+
     def send(self):
 
         self.message = self.ui.message.text()
