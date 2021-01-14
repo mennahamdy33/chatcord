@@ -2,6 +2,7 @@ import sys
 import socket
 import select
 import errno
+import MLWithQt
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QDialog, QApplication
@@ -35,7 +36,10 @@ class questionsWindow(QDialog):
         super(questionsWindow, self).__init__()
         self.ui = Ui_QuestionForm()
         self.ui.setupUi(self)
+
         self.ui.Result.clicked.connect(self.model)
+
+        MLWithQt.ApplicationWindow()
         self.ui.TalkToDoctor.clicked.connect(self.patientInfo)
         self.ui.Done.clicked.connect(app.quit)
 
@@ -118,6 +122,8 @@ class chatwindow(QDialog):
         self.myusername = self.username.encode('utf-8')
         self.username_header = f"{len(self.myusername):<{self.HEADER_LENGTH}}".encode('utf-8')
         self.client_socket.send(self.username_header + self.myusername)
+
+        self.ui.Name.setText(self.username)
 
     def send(self):
 
