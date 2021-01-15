@@ -2,7 +2,6 @@ import sys
 import socket
 import select
 import errno
-import MLWithQt
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QDialog, QApplication
