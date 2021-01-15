@@ -38,11 +38,12 @@ while True:
         if notified_socket == server_socket:
             client_socket, client_address = server_socket.accept()
             user = receive_message(client_socket)
-            print(user)
+            print(user['data'].decode('utf-8')[0])
             if user is False:
                 continue
 
-            if type(ast.literal_eval(user['data'].decode('utf-8'))) == dict:
+            if user['data'].decode('utf-8')[0] == "{":
+                print('yarab')
                 data = ast.literal_eval(user['data'].decode('utf-8'))
                 output = model.predict(data
                                         ,meanOfNumericalData

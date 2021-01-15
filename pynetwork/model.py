@@ -49,7 +49,7 @@ class Model():
         
 
     def RandomForestModel(self):
-            originalData = pd.read_excel(r"/home/menna/network/Model/kidney.xlsx")
+            originalData = pd.read_excel(r"kidney.xlsx")
             Data = originalData.copy()
             numericalData = Data.iloc[:,:self.indexOfStartCatgoricalData]
             categoricalData= Data.iloc[:,self.indexOfStartCatgoricalData:]
