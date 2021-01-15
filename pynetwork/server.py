@@ -42,21 +42,31 @@ while True:
             if user is False:
                 continue
 
-            if user['data'].decode('utf-8')[0] == "{":
-                print('yarab')
-                data = ast.literal_eval(user['data'].decode('utf-8'))
-                output = model.predict(data
-                                        ,meanOfNumericalData
-                                        ,modeOfCategoricalData
-                                        ,classifier).predict()
-                encodedOutput = output.encode('utf-8')
-                print(bytes(f"{len(encodedOutput):<{HEADER_LENGTH}}", 'utf-8'))
-                client_socket.send(bytes(f"{len(encodedOutput):<{HEADER_LENGTH}}", 'utf-8')+encodedOutput)
-
             socket_list.append(client_socket)
 
-            clients[client_socket] = user
+            if user['data'].decode('utf-8')[0] == "{":
+                data = ast.literal_eval(user['data'].decode('utf-8'))
+                # user = data['name'].encode('utf-8')
+                #
+                # print(user)
+                user = {'header':f"{len(data['name']):<{HEADER_LENGTH}}".encode('utf-8'), 'data':data['name'].encode('utf-8')}
+                clients[client_socket] = user
+                newdata=dict()
+                for key,value in data.items():
+                    if key != "name":
+                        newdata[key] = value
 
+                output = model.predict(newdata
+                                       , meanOfNumericalData
+                                       , modeOfCategoricalData
+                                       , classifier).predict()
+                encodedOutput = output.encode('utf-8')
+                print(bytes(f"{len(encodedOutput):<{HEADER_LENGTH}}", 'utf-8'))
+                client_socket.send(bytes(f"{len(encodedOutput):<{HEADER_LENGTH}}", 'utf-8') + encodedOutput)
+                continue
+            else:
+                clients[client_socket] = user
+                print(user)
             # print(f"Accepted new connection from {client_address[0]}:{client_address[1]} username:{user['data'].decode('utf-8')}")
 
         else:
@@ -70,6 +80,7 @@ while True:
             # print(f"Received message from {user['data'].decode('utf-8')}: {message['data'].decode('utf-8')}")
             for client_socket in clients:
                 if client_socket != notified_socket:
+
                     client_socket.send(user['header'] + user['data'] + message['header'] + message['data'])
         # It's not really necessary to have this, but will handle some socket exceptions just in case
     for notified_socket in exception_sockets:

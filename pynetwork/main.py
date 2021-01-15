@@ -10,6 +10,7 @@ from LoginForm import Ui_Form
 from ChatRoom import Ui_ChatForm
 from First import Ui_FirstForm
 from Questions import Ui_QuestionForm
+
 import pickle
 import time
 IP = "127.0.0.1"
@@ -48,7 +49,9 @@ class questionsWindow(QDialog):
         self.ui.Done.clicked.connect(app.quit)
 
     def model(self):
-        data = {'age': self.ui.AgeText.text()
+        data = {
+                'name':self.ui.NameText.text()
+               ,'age': self.ui.AgeText.text()
                 ,'bu': self.ui.BloodUreaText.text()
                 ,'bgr': self.ui.GlucoseText.text()
                 ,'sc': self.ui.SerumText.text()
