@@ -5,7 +5,7 @@ import model
 HEADER_LENGTH = 10
 IP = "127.0.0.1"
 PORT = 1234
-
+import ast
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
@@ -23,9 +23,9 @@ def receive_message(client_socket):
         message_header = client_socket.recv(HEADER_LENGTH)
         if not len(message_header):
             return False
-       
+
         message_length = int(message_header.decode("utf-8").strip())
-        message = client_socket.recv(message_length)       
+        message = client_socket.recv(message_length)
         # if(flag):
         #     message = pickle.loads(message)
         return {"header": message_header, "data": message}
@@ -38,12 +38,12 @@ while True:
         if notified_socket == server_socket:
             client_socket, client_address = server_socket.accept()
             user = receive_message(client_socket)
-         
+            print(user)
             if user is False:
                 continue
-            data = pickle.loads(user['data'])
-            if type(data) == dict:
-            
+
+            if type(ast.literal_eval(user['data'].decode('utf-8'))) == dict:
+                data = ast.literal_eval(user['data'].decode('utf-8'))
                 output = model.predict(data
                                         ,meanOfNumericalData
                                         ,modeOfCategoricalData
