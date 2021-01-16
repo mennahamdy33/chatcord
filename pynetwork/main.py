@@ -8,10 +8,6 @@ from LoginForm import Ui_Form
 from ChatRoom import Ui_ChatForm
 from First import Ui_FirstForm
 from Questions import Ui_QuestionForm
-<<<<<<< HEAD
-import pickle
-=======
->>>>>>> efac186f7195fd4a4db0e82ed0248bc0ffef8c14
 import time
 IP = "127.0.0.1"
 PORT = 1234
@@ -48,13 +44,9 @@ class questionsWindow(QDialog):
         # get the QuestionForm UI
         self.ui = Ui_QuestionForm()
         self.ui.setupUi(self)
-<<<<<<< HEAD
         # connect Result button with model Function
         self.ui.Result.clicked.connect(self.model)
         # connect TalkToDoctor button to Patient Info Function 
-=======
-        self.ui.Result.clicked.connect(self.model)
->>>>>>> efac186f7195fd4a4db0e82ed0248bc0ffef8c14
         self.ui.TalkToDoctor.clicked.connect(self.patientInfo)
         self.ui.Done.clicked.connect(self.done)
 
@@ -64,25 +56,6 @@ class questionsWindow(QDialog):
     def model(self):
         # get data from User Interface
         data = {
-<<<<<<< HEAD
-                'name':self.ui.NameText.text() # Name 
-                ,'age': self.ui.AgeText.text()  # AGE
-                ,'bp': self.ui.BloodPressureText.text() #Blood Pressure
-                ,'bgr': self.ui.GlucoseText.text() #Blood Glucose 
-                ,'bu': self.ui.BloodUreaText.text() # blood Urea
-                ,'sc': self.ui.SerumText.text() # Serum Creatinine 
-                ,'hemo': self.ui.HemoglobinText.text()  # Hemoglobin 
-                ,'htn':self.IsCheckBoxChecked(self.ui.Hypertension) #Hypertension
-                ,'dm':self.IsCheckBoxChecked(self.ui.Diabetes) # Diabetes
-                ,'cad':self.IsCheckBoxChecked(self.ui.Coronary) # Coronary Artery Disease
-                ,'appet':self.ui.comboBox_3.currentIndex()-1    # Appetite
-                ,'ane':self.IsCheckBoxChecked(self.ui.Anemia)   #Anemia
-                ,'al':self.ui.AlbuminComboBox.currentIndex()-1  #Albumin
-                ,'su':self.ui.SugarComboBox.currentIndex()-1    #sugar
-                ,'ba':self.IsCheckBoxChecked(self.ui.Bacteria)  # Bacteria
-                }
-        # convert dic to str to encode it like the text msg 
-=======
             'name': self.ui.NameText.text()
             , 'age': self.ui.AgeText.text()
             , 'bp': self.ui.BloodPressureText.text()
@@ -99,7 +72,6 @@ class questionsWindow(QDialog):
             , 'su': self.ui.SugarComboBox.currentIndex() - 1
             , 'ba': self.IsCheckBoxChecked(self.ui.Bacteria)
         }
->>>>>>> efac186f7195fd4a4db0e82ed0248bc0ffef8c14
         data = str(data)
         # encode the msg
         msg = data.encode('utf-8')
@@ -111,11 +83,7 @@ class questionsWindow(QDialog):
         self.result()
 
     def result(self):
-<<<<<<< HEAD
        # get Result from Server after applying the RanhomForest Model
-=======
-
->>>>>>> efac186f7195fd4a4db0e82ed0248bc0ffef8c14
         message_header = client_socket.recv(HEADERSIZE)
         message_length = int(message_header.decode('utf-8').strip())
         message = client_socket.recv(message_length).decode('utf-8')
@@ -164,10 +132,6 @@ class chatwindow(QDialog):
         #connect Send Button to send function
         self.ui.SendButton.clicked.connect(self.send)
         self.message = ''
-<<<<<<< HEAD
-
-=======
->>>>>>> efac186f7195fd4a4db0e82ed0248bc0ffef8c14
         client_socket.setblocking(False)
         # use timer to check if there is any new message or no
         timer = QTimer(self)
@@ -181,10 +145,7 @@ class chatwindow(QDialog):
         self.username_header = f"{len(self.myusername):<{self.HEADER_LENGTH}}".encode('utf-8')
         # sent it to server 
         client_socket.send(self.username_header + self.myusername)
-<<<<<<< HEAD
         # set the user name at the top of the chat
-=======
->>>>>>> efac186f7195fd4a4db0e82ed0248bc0ffef8c14
         self.ui.Name.setText(self.username)
 
     def send(self):
@@ -203,10 +164,6 @@ class chatwindow(QDialog):
 
     def receive(self):
         try:
-<<<<<<< HEAD
-=======
-
->>>>>>> efac186f7195fd4a4db0e82ed0248bc0ffef8c14
             username_header = client_socket.recv(self.HEADER_LENGTH)
             # If we received no data, server gracefully closed a connection.
             if not len(username_header):
