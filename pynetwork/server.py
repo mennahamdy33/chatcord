@@ -1,6 +1,5 @@
 import socket
 import select
-import pickle
 import model
 HEADER_LENGTH = 10
 IP = "127.0.0.1"
