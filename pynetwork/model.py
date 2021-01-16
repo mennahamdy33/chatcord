@@ -38,7 +38,6 @@ class Model():
             Data.iloc[:,self.indexOfStartCatgoricalData:] = categoricalData.fillna(modeOfCategoricalData)
             # encode categorical data
             Data.iloc[:,self.indexOfStartCatgoricalData:]= self.ord_enc.fit_transform(Data.iloc[:,self.indexOfStartCatgoricalData:])
-            print(Data)
             # apply Model
             X = Data.drop('class', axis=1)
             y = Data['class']

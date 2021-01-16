@@ -41,7 +41,6 @@ while True:
             client_socket, client_address = server_socket.accept()
             # call receive_message to decode the data
             user = receive_message(client_socket)
-            print(user['data'].decode('utf-8')[0])
             if user is False:
                 continue
 
