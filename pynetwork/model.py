@@ -37,7 +37,7 @@ class predict():
 
         output = self.classifier.predict(inputData)
 
-        if (output == 1): 
+        if (output == 0): 
             return('You Have To see your Doctor ASAP')
         else:
             return('Nothing To worry about')

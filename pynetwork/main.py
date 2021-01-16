@@ -46,7 +46,10 @@ class questionsWindow(QDialog):
 
 #        MLWithQt.ApplicationWindow()
         self.ui.TalkToDoctor.clicked.connect(self.patientInfo)
-        self.ui.Done.clicked.connect(app.quit)
+        self.ui.Done.clicked.connect(self.done)
+    def done(self):
+        sys.exit()
+        app.quit()
 
     def model(self):
         data = {
@@ -149,7 +152,7 @@ class chatwindow(QDialog):
     def receive(self):
         try:
 
-            print('hola')
+            #print('hola')
             username_header = client_socket.recv(self.HEADER_LENGTH)
             # If we received no data, server gracefully closed a connection, for example using socket.close() or socket.shutdown(socket.SHUT_RDWR)
             if not len(username_header):
