@@ -50,11 +50,11 @@ class questionsWindow(QDialog):
     def model(self):
         data = {
                 'name':self.ui.NameText.text()
-               ,'age': self.ui.AgeText.text()
-                ,'bu': self.ui.BloodUreaText.text()
-                ,'bgr': self.ui.GlucoseText.text()
-                ,'sc': self.ui.SerumText.text()
+                ,'age': self.ui.AgeText.text()
                 ,'bp': self.ui.BloodPressureText.text()
+                ,'bgr': self.ui.GlucoseText.text()
+                ,'bu': self.ui.BloodUreaText.text()
+                ,'sc': self.ui.SerumText.text()
                 ,'hemo': self.ui.HemoglobinText.text()
                 ,'htn':self.IsCheckBoxChecked(self.ui.Hypertension)
                 ,'dm':self.IsCheckBoxChecked(self.ui.Diabetes)
@@ -71,7 +71,7 @@ class questionsWindow(QDialog):
         msg = data.encode('utf-8')
         message_header = f"{len(msg):<{HEADERSIZE}}".encode('utf-8')
         client_socket.send(message_header + msg)
-        time.sleep(5)
+        print(data)
         self.result()
 
     def result(self):

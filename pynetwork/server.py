@@ -65,7 +65,7 @@ while True:
                 encodedOutput = output.encode('utf-8')
                 print(bytes(f"{len(encodedOutput):<{HEADER_LENGTH}}", 'utf-8'))
                 client_socket.send(bytes(f"{len(encodedOutput):<{HEADER_LENGTH}}", 'utf-8') + encodedOutput)
-                continue
+                # continue
             else:
                 clients[client_socket] = user
                 print(user)

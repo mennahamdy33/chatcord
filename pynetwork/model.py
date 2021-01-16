@@ -23,7 +23,7 @@ class Model():
 
     def RandomForestModel(self):
             # The Data which we used for train our data  
-            originalData = pd.read_excel(r"kidney.xlsx")
+            originalData = pd.read_excel(r"E:\Projects\networkFinal\network\pynetwork\kidney.xlsx")
             Data = originalData.copy()
             numericalData = Data.iloc[:,:self.indexOfStartCatgoricalData]
             categoricalData= Data.iloc[:,self.indexOfStartCatgoricalData:]
@@ -38,7 +38,7 @@ class Model():
             Data.iloc[:,self.indexOfStartCatgoricalData:] = categoricalData.fillna(modeOfCategoricalData)
             # encode categorical data
             Data.iloc[:,self.indexOfStartCatgoricalData:]= self.ord_enc.fit_transform(Data.iloc[:,self.indexOfStartCatgoricalData:])
-
+            print(Data)
             # apply Model
             X = Data.drop('class', axis=1)
             y = Data['class']
@@ -64,8 +64,9 @@ class predict():
         numericalData = self.NumericalData.replace(r'', np.NaN)
 
         numericalData = numericalData.fillna(self.meanOfNumericalData)
-        
+        print(numericalData)
         categoricalData = self.CategoricalData.fillna(self.modeOfCategoricalData)
+        print(categoricalData)
         # to be able to used classifier, The data must be converted into one variable so join function used for that.
         inputData = numericalData.join(categoricalData)
 
