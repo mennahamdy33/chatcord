@@ -1,8 +1,6 @@
 import sys
 import socket
-import select
 import errno
-# import MLWithQt
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QDialog, QApplication
@@ -10,8 +8,6 @@ from LoginForm import Ui_Form
 from ChatRoom import Ui_ChatForm
 from First import Ui_FirstForm
 from Questions import Ui_QuestionForm
-
-import pickle
 import time
 IP = "127.0.0.1"
 PORT = 1234
@@ -41,36 +37,31 @@ class questionsWindow(QDialog):
         super(questionsWindow, self).__init__()
         self.ui = Ui_QuestionForm()
         self.ui.setupUi(self)
-
         self.ui.Result.clicked.connect(self.model)
-
-#        MLWithQt.ApplicationWindow()
         self.ui.TalkToDoctor.clicked.connect(self.patientInfo)
         self.ui.Done.clicked.connect(self.done)
-    def done(self):
-        sys.exit()
-        app.quit()
 
+    def done(self):
+        client_socket.close()
+        sys.exit()
     def model(self):
         data = {
-                'name':self.ui.NameText.text()
-               ,'age': self.ui.AgeText.text()
-                ,'bu': self.ui.BloodUreaText.text()
-                ,'bgr': self.ui.GlucoseText.text()
-                ,'sc': self.ui.SerumText.text()
-                ,'bp': self.ui.BloodPressureText.text()
-                ,'hemo': self.ui.HemoglobinText.text()
-                ,'htn':self.IsCheckBoxChecked(self.ui.Hypertension)
-                ,'dm':self.IsCheckBoxChecked(self.ui.Diabetes)
-                ,'cad':self.IsCheckBoxChecked(self.ui.Coronary)
-                ,'appet':self.ui.comboBox_3.currentIndex()-1
-                ,'ane':self.IsCheckBoxChecked(self.ui.Anemia)
-                ,'al':self.ui.AlbuminComboBox.currentIndex()-1
-                ,'su':self.ui.SugarComboBox.currentIndex()-1
-                ,'ba':self.IsCheckBoxChecked(self.ui.Bacteria)
-                }
-        # msg = pickle.dumps(data)
-        # msg = bytes(f"{len(msg):<{HEADERSIZE}}", 'utf-8')+msg
+            'name': self.ui.NameText.text()
+            , 'age': self.ui.AgeText.text()
+            , 'bp': self.ui.BloodPressureText.text()
+            , 'bgr': self.ui.GlucoseText.text()
+            , 'bu': self.ui.BloodUreaText.text()
+            , 'sc': self.ui.SerumText.text()
+            , 'hemo': self.ui.HemoglobinText.text()
+            , 'htn': self.IsCheckBoxChecked(self.ui.Hypertension)
+            , 'dm': self.IsCheckBoxChecked(self.ui.Diabetes)
+            , 'cad': self.IsCheckBoxChecked(self.ui.Coronary)
+            , 'appet': self.ui.comboBox_3.currentIndex() - 1
+            , 'ane': self.IsCheckBoxChecked(self.ui.Anemia)
+            , 'al': self.ui.AlbuminComboBox.currentIndex() - 1
+            , 'su': self.ui.SugarComboBox.currentIndex() - 1
+            , 'ba': self.IsCheckBoxChecked(self.ui.Bacteria)
+        }
         data = str(data)
         msg = data.encode('utf-8')
         message_header = f"{len(msg):<{HEADERSIZE}}".encode('utf-8')
@@ -79,12 +70,7 @@ class questionsWindow(QDialog):
         self.result()
 
     def result(self):
-        # username_header = self.clientsocket.recv(HEADERSIZE)
-        # # If we received no data, server gracefully closed a connection, for example using socket.close() or socket.shutdown(socket.SHUT_RDWR)
-        # if not len(username_header):
-        #     print('Connection closed by the server')
-        #     sys.exit()
-       
+
         message_header = client_socket.recv(HEADERSIZE)
         message_length = int(message_header.decode('utf-8').strip())
         message = client_socket.recv(message_length).decode('utf-8')
@@ -124,8 +110,6 @@ class chatwindow(QDialog):
         self.HEADER_LENGTH = 10
         self.ui.SendButton.clicked.connect(self.send)
         self.message = ''
-        # client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # client_socket.connect((IP, PORT))
         client_socket.setblocking(False)
         timer = QTimer(self)
         timer.timeout.connect(self.receive)
@@ -133,7 +117,6 @@ class chatwindow(QDialog):
         self.myusername = self.username.encode('utf-8')
         self.username_header = f"{len(self.myusername):<{self.HEADER_LENGTH}}".encode('utf-8')
         client_socket.send(self.username_header + self.myusername)
-
         self.ui.Name.setText(self.username)
 
     def send(self):
@@ -152,7 +135,6 @@ class chatwindow(QDialog):
     def receive(self):
         try:
 
-            #print('hola')
             username_header = client_socket.recv(self.HEADER_LENGTH)
             # If we received no data, server gracefully closed a connection, for example using socket.close() or socket.shutdown(socket.SHUT_RDWR)
             if not len(username_header):
