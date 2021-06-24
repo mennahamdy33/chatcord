@@ -28,11 +28,9 @@ directly go to the chat room
 client enters from User Interface must go first to the
 server.
  Data used For Train our Model
-“https://www.kaggle.com/niteshhalai/chronic-kidney-disea
-se”
+“https://www.kaggle.com/niteshhalai/chronic-kidney-disease”
 
- Repository Link:
-https://github.com/mennahamdy33/network
+
 
 ## Note Before running the code:
 ### Change the path of the data in model.py -> Class
